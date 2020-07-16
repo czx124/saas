@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置shiro的过滤器工厂-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login.jsp"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /index.jsp* = anon
+                /login.jsp* = anon
+                /login* = anon
+                /logout* = anon
+                <!--/system/user/list=perms["用户管理"]-->
+                /css/** = anon
+                /img/** = anon
+                /plugins/** = anon
+                /make/** = anon
+                /** = authc
+
+            </value>
+        </property>
+    </bean>
+
+    <!--配置安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="authRealm"/>
+    </bean>
+
+    <!--配置自定义realm域-->
+    <bean id="authRealm" class="com.itheima.web.shiro.AuthRealm">
+        <!--注入凭证匹配器-->
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+
+
+    <!--创建shiro提供的凭证匹配器，自动对用户输入的密码进行md5算法加密-->
+    <!--<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+        <!--<property name="hashAlgorithmName" value="md5"/>-->
+    <!--</bean>-->
+
+    <!--自定义凭证匹配器-->
+    <bean id="credentialsMatcher" class="com.itheima.web.shiro.CustomCredentialMatcher">
+
+    </bean>
+
+
+    <bean id="lifecycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+
+    <aop:aspectj-autoproxy/>
+
+</beans>

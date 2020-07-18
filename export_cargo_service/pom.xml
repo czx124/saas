@@ -7,40 +7,26 @@
     <version>1.0-SNAPSHOT</version> 
   </parent>  
   <modelVersion>4.0.0</modelVersion>  
-  <artifactId>export_web</artifactId>  
+  <artifactId>export_cargo_service</artifactId>
   <packaging>war</packaging>
-  <dependencies> 
-    <dependency> 
-      <groupId>javaee140</groupId>  
-      <artifactId>export_service</artifactId>  
-      <version>1.0-SNAPSHOT</version> 
+
+  <dependencies>
+    <dependency>
+      <groupId>javaee140</groupId>
+      <artifactId>export_dao</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>javaee140</groupId>
-      <artifactId>export_company_interface</artifactId>
+      <artifactId>export_cargo_interface</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
 
-    <!--dubbo支持包-->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>dubbo</artifactId>
       <version>2.6.6</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-web</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-beans</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-context</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>
@@ -69,10 +55,5 @@
       <version>0.1</version>
     </dependency>
 
-    <dependency>
-      <groupId>javaee140</groupId>
-      <artifactId>export_cargo_interface</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-  </dependencies> 
+  </dependencies>
 </project>

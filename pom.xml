@@ -16,6 +16,8 @@
         <module>export_company_interface</module>
         <module>export_company_service</module>
         <module>export_web_portal</module>
+        <module>export_cargo_interface</module>
+        <module>export_cargo_service</module>
     </modules>
 
 

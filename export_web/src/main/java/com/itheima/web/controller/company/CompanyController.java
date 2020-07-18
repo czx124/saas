@@ -1,8 +1,8 @@
 package com.itheima.web.controller.company;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.domain.company.Company;
 import com.itheima.service.company.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/company")
 public class CompanyController {
-    @Autowired
+    @Reference
     private CompanyService companyService;
 
     @RequestMapping("/list")

@@ -7,6 +7,9 @@ import com.itheima.domain.cargo.ContractProductExample;
 
 import java.util.List;
 
+/**
+ * @author Jackson
+ */
 public interface ContractProductDao {
 
 	//删除

@@ -1,6 +1,5 @@
 package com.itheima.cargo;
 
-import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;

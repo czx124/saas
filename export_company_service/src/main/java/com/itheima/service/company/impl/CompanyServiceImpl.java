@@ -6,8 +6,6 @@ import com.itheima.domain.company.Company;
 import com.itheima.service.company.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
 import java.util.List;
 import java.util.UUID;
 @Service(timeout = 100000)

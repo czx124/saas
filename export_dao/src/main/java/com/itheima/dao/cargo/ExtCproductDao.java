@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ExtCproductDao {
 
+	List<ExtCproduct> findByProductId(String productId);
+
 	//删除
 	int deleteByPrimaryKey(String id);
 

@@ -20,10 +20,10 @@
         <result column="company_name" jdbcType="VARCHAR" property="companyName"/>
     </resultMap>
 
-    <!--&lt;!&ndash;findByProductId&ndash;&gt;-->
-    <!--<select id="findByProductId" parameterType="java.lang.String" resultMap="BaseResultMap">-->
-        <!--select * from co_ext_cproduct where contract_product_id =#{productId}-->
-    <!--</select>-->
+    <!--findByProductId-->
+    <select id="findByProductId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from co_ext_cproduct where contract_product_id =#{productId}
+    </select>
 
     <sql id="Base_Column_List">
         id, contract_product_id,contract_id, factory_id, factory_name, product_no, product_image,product_request,

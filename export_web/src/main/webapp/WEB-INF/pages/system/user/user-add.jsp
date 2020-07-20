@@ -93,11 +93,12 @@
 
                     <div class="col-md-2 title">等级</div>
                     <div class="col-md-4 data">
-                        <div class="form-group form-inline" style="font-size: 10px">
-                            <div class="radio"><label><input type="radio" ${user.degree==1?'checked':''} name="degree" value="1">系统管理员</label></div>
-                            <div class="radio"><label><input type="radio" ${user.degree==2?'checked':''} name="degree" value="2">管理所有下属部门和人员</label></div>
+                        <div class="form-group form-inline" style="font-size: 8px">
+                            <div class="radio"><label><input type="radio" ${user.degree==0?'checked':''} name="degree" value="0">saas管理</label></div>
+                            <div class="radio"><label><input type="radio" ${user.degree==1?'checked':''} name="degree" value="1">系统管理</label></div>
+                            <div class="radio"><label><input type="radio" ${user.degree==2?'checked':''} name="degree" value="2">管理所有部门</label></div>
                             <div class="radio"><label><input type="radio" ${user.degree==3?'checked':''} name="degree" value="3">管理本部门</label></div>
-                            <div class="radio"><label><input type="radio" ${user.degree==4?'checked':''} name="degree" value="4">普通员工</label></div>
+                            <div class="radio"><label><input type="radio" ${user.degree==4?'checked':''} name="degree" value="4">普通</label></div>
                         </div>
                     </div>
 

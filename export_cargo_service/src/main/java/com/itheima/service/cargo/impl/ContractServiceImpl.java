@@ -66,4 +66,11 @@ public class ContractServiceImpl implements ContractService {
     public void delete(String id) {
         contractDao.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public PageInfo<Contract> findByDeptId(String deptId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Contract> list = contractDao.findByDeptId(deptId);
+        return new PageInfo<>(list);
+    }
 }

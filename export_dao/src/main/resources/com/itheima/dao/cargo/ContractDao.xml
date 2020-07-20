@@ -88,6 +88,9 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
       select <include refid="Base_Column_List" /> from co_contract where id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="findByDeptId" resultMap="BaseResultMap">
+    select * from co_contract where FIND_IN_SET(create_dept,getDeptChild(#{deptId}))
+    </select>
 
     <!--根据id删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

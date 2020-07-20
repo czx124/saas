@@ -40,10 +40,20 @@ public class ContractController extends BaseController {
         ContractExample.Criteria criteria = example.createCriteria();
         //1.3 查询条件: 企业id
         criteria.andCompanyIdEqualTo(getLoginCompanyId());
+        PageInfo<Contract> pageInfo = null;
+        if(getLoginUser().getDegree() == 4){
+            criteria.andCreateByEqualTo(getLoginUser().getId());
+            pageInfo = contractService.findByPage(example,pageNum,pageSize);
+        }else if (getLoginUser().getDegree() == 3){
+            criteria.andCreateDeptEqualTo(getLoginUser().getDeptId());
+            pageInfo = contractService.findByPage(example,pageNum,pageSize);
 
+        }else if (getLoginUser().getDegree() == 2){
+            pageInfo = contractService.findByDeptId(getLoginUser().getDeptId(),pageNum,pageSize);
+
+        }
         //1.2 调用service查询
-        PageInfo<Contract> pageInfo =
-                contractService.findByPage(example,pageNum,pageSize);
+
         //返回
         ModelAndView mv = new ModelAndView();
         mv.addObject("pageInfo",pageInfo);
@@ -69,6 +79,9 @@ public class ContractController extends BaseController {
         contract.setCompanyName(getCompanyName());
         // 判断
         if (StringUtils.isEmpty(contract.getId())){
+            //设置合同创建人和创建部门
+            contract.setCreateBy(getLoginUser().getId());
+            contract.setCreateDept(getLoginUser().getDeptId());
             // 添加
             contractService.save(contract);
         } else {

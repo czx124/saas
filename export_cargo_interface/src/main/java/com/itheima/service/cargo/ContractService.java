@@ -47,6 +47,8 @@ public interface ContractService {
      * 删除部门
      */
     void delete(String id);
+
+    PageInfo<Contract> findByDeptId(String deptId, Integer pageNum, Integer pageSize);
 }
 
 

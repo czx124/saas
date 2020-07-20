@@ -10,9 +10,12 @@ import com.itheima.domain.cargo.FactoryExample;
 import com.itheima.service.cargo.ContractProductService;
 import com.itheima.service.cargo.FactoryService;
 import com.itheima.web.controller.BaseController;
+import com.itheima.web.utils.FileUploadUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,7 +30,8 @@ public class ContractProductController extends BaseController {
     private ContractProductService contractProductService;
     @Reference
     private FactoryService factoryService;
-
+    @Autowired
+    private FileUploadUtil fileUploadUtil;
 
     @RequestMapping("/list")
     public String contractList(String contractId, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
@@ -40,24 +44,30 @@ public class ContractProductController extends BaseController {
 
         //根据购销合同id查询购销合同下的所有货物
         ContractProductExample contractProductExample = new ContractProductExample();
-        ContractProductExample.Criteria contractProductExampleCriteria = contractProductExample.createCriteria();
+    ContractProductExample.Criteria contractProductExampleCriteria = contractProductExample.createCriteria();
         contractProductExampleCriteria.andContractIdEqualTo(contractId);
 
-        PageInfo<ContractProduct> pageInfo = contractProductService.findByPage(contractProductExample, pageNum, pageSize);
+    PageInfo<ContractProduct> pageInfo = contractProductService.findByPage(contractProductExample, pageNum, pageSize);
         request.setAttribute("pageInfo", pageInfo);
         request.setAttribute("contractId", contractId);
         return "cargo/product/product-list";
-    }
+}
 
     /**
      * 保存，修改
      */
 
     @RequestMapping("/edit")
-    public String edit(ContractProduct contractProduct) {
+    public String edit(MultipartFile productPhoto, ContractProduct contractProduct) {
         contractProduct.setCompanyId(getLoginCompanyId());
         contractProduct.setCompanyName(getCompanyName());
         if (StringUtils.isEmpty(contractProduct.getId())) {
+            try {
+                String fullFileUrl = "http://"+fileUploadUtil.upload(productPhoto);
+                contractProduct.setProductImage(fullFileUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             contractProductService.save(contractProduct);
         } else {
             contractProductService.update(contractProduct);

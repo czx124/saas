@@ -1,4 +1,4 @@
-package com.itheima.web.log;
+package com.itheima.web.utils;
 
 import com.itheima.domain.system.log.SysLog;
 import com.itheima.domain.system.user.User;

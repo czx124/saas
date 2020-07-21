@@ -40,7 +40,7 @@
     <!--默认是true，provider不启动时报错，如下设置为false，则是provider不启动也不报错-->
     <dubbo:consumer check="false"/>
 
-    <!--文件上传-->
+    <!--文件上传解析器-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="5242880"/>
     </bean>

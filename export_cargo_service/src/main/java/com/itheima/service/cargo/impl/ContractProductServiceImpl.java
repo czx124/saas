@@ -96,4 +96,9 @@ public class ContractProductServiceImpl implements ContractProductService {
         //删除货物
         contractProductDao.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<ContractProductVO> findByShipTime(String companyId, String inputDate) {
+        return contractProductDao.findByShipTime(companyId,inputDate);
+    }
 }

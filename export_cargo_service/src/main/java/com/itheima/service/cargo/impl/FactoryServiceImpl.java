@@ -51,4 +51,12 @@ public class FactoryServiceImpl implements FactoryService {
     public void delete(String id) {
         factoryDao.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public String findIdByFactoryName(String factoryName) {
+        FactoryExample factoryExample = new FactoryExample();
+        factoryExample.createCriteria().andFactoryNameEqualTo(factoryName);
+        List<Factory> factoryList = factoryDao.selectByExample(factoryExample);
+        return (factoryList!=null &&factoryList.size()>0) ? factoryList.get(0).getId() : "";
+    }
 }

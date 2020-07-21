@@ -4,6 +4,7 @@ package com.itheima.dao.cargo;
 
 import com.itheima.domain.cargo.ContractProduct;
 import com.itheima.domain.cargo.ContractProductExample;
+import com.itheima.domain.cargo.ContractProductVO;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface ContractProductDao {
 
 	//更新
     int updateByPrimaryKeySelective(ContractProduct record);
+
+    List<ContractProductVO> findByShipTime(String companyId,String inputDate);
 }

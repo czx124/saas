@@ -80,6 +80,22 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/> from co_contract_product where id = #{id}
     </select>
+    <select id="findByShipTime" resultType="com.itheima.domain.cargo.ContractProductVO">
+        select c.`custom_name` customName,
+                cp.`order_no` orderNo,
+                cp.`product_no` productNo,
+                cp.`cnumber` cNumber,
+                cp.`factory_name` factoryName,
+                c.`delivery_period` deliveryPeriod,
+                c.`ship_time` shipTime,
+                c.`trade_terms` tradeTerms
+        from co_contract c, co_contract_product cp
+        where 1=1
+        and c.`id`=cp.`contract_id`
+        and c.`company_id`=#{param1}
+        and DATE_FORMAT(c.`ship_time`,'%Y-%m')=#{param2}
+    </select>
+
 
     <!--根据id删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

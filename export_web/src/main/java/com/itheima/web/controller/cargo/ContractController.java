@@ -120,6 +120,11 @@ public class ContractController extends BaseController {
         return "cargo/contract/contract-view";
     }
 
+    /**
+     * 提交
+     * @param id
+     * @return
+     */
     @RequestMapping("/submit")
     public String submit(String id) {
         Contract contract = new Contract();
@@ -129,6 +134,11 @@ public class ContractController extends BaseController {
         return "redirect:/cargo/contract/list.do";
     }
 
+    /**
+     * 取消
+     * @param id
+     * @return
+     */
     @RequestMapping("/cancel")
     public String cancel(String id) {
         Contract contract = new Contract();

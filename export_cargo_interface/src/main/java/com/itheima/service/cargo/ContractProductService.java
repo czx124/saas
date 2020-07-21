@@ -5,6 +5,7 @@ package com.itheima.service.cargo;
 import com.github.pagehelper.PageInfo;
 import com.itheima.domain.cargo.ContractProduct;
 import com.itheima.domain.cargo.ContractProductExample;
+import com.itheima.domain.cargo.ContractProductVO;
 
 import java.util.List;
 
@@ -47,6 +48,14 @@ public interface ContractProductService {
      * 删除部门
      */
     void delete(String id);
+
+    /**
+     * 根据船期导出出货表
+     */
+
+    List<ContractProductVO> findByShipTime(String companyId,String inputDate);
+
+
 }
 
 

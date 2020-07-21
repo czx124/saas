@@ -11,12 +11,18 @@ import com.itheima.service.cargo.ContractProductService;
 import com.itheima.service.cargo.FactoryService;
 import com.itheima.web.controller.BaseController;
 import com.itheima.web.utils.FileUploadUtil;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -93,6 +99,51 @@ public class ContractProductController extends BaseController {
     public String delete(String id,String contractId){
         contractProductService.delete(id);
         return "redirect:/cargo/contractProduct/list?contractId="+contractId;
+    }
+
+    @RequestMapping("/toImport")
+    public String toImport(String contractId){
+        request.setAttribute("contractId",contractId);
+        return "cargo/product/product-import";
+    }
+
+
+    @RequestMapping("/import")
+    public String upload(MultipartFile file,String contractId) throws IOException {
+        //获取工作簿
+        Workbook sheets = new XSSFWorkbook(file.getInputStream());
+        //获取第一个工作表
+        Sheet sheet = sheets.getSheetAt(0);
+        //获取总行数
+        int rows = sheet.getPhysicalNumberOfRows();
+        for (int i = 1; i < rows; i++){
+            Row row = sheet.getRow(i);
+            //新建一个货物将表格每行的内容添加到货物
+            ContractProduct contractProduct = new ContractProduct();
+            contractProduct.setContractId(contractId);
+            row.getCell(0).setCellType(CellType.STRING);
+            contractProduct.setFactoryName(row.getCell(0).getStringCellValue());
+            row.getCell(1).setCellType(CellType.STRING);
+            contractProduct.setProductNo(row.getCell(1).getStringCellValue());
+            row.getCell(2).setCellType(CellType.STRING);
+            contractProduct.setLoadingRate(row.getCell(2).getStringCellValue());
+            row.getCell(3).setCellType(CellType.STRING);
+            contractProduct.setBoxNum(Integer.parseInt(row.getCell(3).getStringCellValue()));
+            row.getCell(4).setCellType(CellType.STRING);
+            contractProduct.setPackingUnit(row.getCell(4).getStringCellValue());
+            row.getCell(5).setCellType(CellType.STRING);
+            contractProduct.setCnumber(Integer.parseInt(row.getCell(5).getStringCellValue()));
+            row.getCell(6).setCellType(CellType.STRING);
+            contractProduct.setPrice(Double.parseDouble(row.getCell(6).getStringCellValue()));
+            contractProduct.setCompanyId(getLoginCompanyId());
+            contractProduct.setCompanyName(getCompanyName());
+            //根据工厂名字查找工厂id
+            String factoryId = factoryService.findIdByFactoryName(contractProduct.getFactoryName());
+            contractProduct.setFactoryId(factoryId);
+            contractProductService.save(contractProduct);
+
+        }
+        return "redirect:/cargo/contract/list.do";
     }
 
 

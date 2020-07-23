@@ -19,7 +19,7 @@
                 /img/** = anon
                 /plugins/** = anon
                 /make/** = anon
-                /** = authc
+                <!--/** = authc-->
 
             </value>
         </property>

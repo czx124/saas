@@ -10,9 +10,12 @@ import com.itheima.domain.cargo.FactoryExample;
 import com.itheima.service.cargo.ExtCproductService;
 import com.itheima.service.cargo.FactoryService;
 import com.itheima.web.controller.BaseController;
+import com.itheima.web.utils.FileUploadUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +30,9 @@ public class ExtCproductController extends BaseController {
     private ExtCproductService extCproductService;
     @Reference
     private FactoryService factoryService;
+
+    @Autowired
+    private FileUploadUtil fileUploadUtil;
     @RequestMapping("/list")
     public String list(String contractId,String contractProductId,
                        @RequestParam(defaultValue = "1") int pageNum,
@@ -46,8 +52,16 @@ public class ExtCproductController extends BaseController {
     }
 
     @RequestMapping("/edit")
-    public String edit(ExtCproduct extCproduct){
+    public String edit(MultipartFile productPhoto,ExtCproduct extCproduct){
+        extCproduct.setCompanyId(getLoginCompanyId());
+        extCproduct.setCompanyName(getCompanyName());
         if(StringUtils.isEmpty(extCproduct.getId())){
+            try {
+                String fullFileUrl = "http://"+fileUploadUtil.upload(productPhoto);
+                extCproduct.setProductImage(fullFileUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             extCproductService.save(extCproduct);
         }else {
             extCproductService.update(extCproduct);

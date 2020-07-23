@@ -78,7 +78,9 @@
                         <div class="col-md-2 title">货物照片</div>
                         <div class="col-md-4 data">
                             <c:if test="${not empty extCproduct.productImage && !(extCproduct.productImage eq null) }">
-                                <img src="${extCproduct.productImage}" width="300px" height="180px">
+                                <%--<img src="${extCproduct.productImage}" width="300px" height="180px">--%>
+                                <a href="${extCproduct.productImage}" target="_blank">查看图片</a>
+
                                 <input type="hidden" name="productImage" value="${extCproduct.productImage}">
                             </c:if>
 

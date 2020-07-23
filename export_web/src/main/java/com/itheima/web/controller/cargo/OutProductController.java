@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -81,11 +82,11 @@ public class OutProductController extends BaseController {
                 cell.setCellStyle(cellStyles[4]);
 
                 cell = row.createCell(6);
-                cell.setCellValue(contractProductVO.getDeliveryPeriod());
+                cell.setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(contractProductVO.getDeliveryPeriod()));
                 cell.setCellStyle(cellStyles[5]);
 
                 cell = row.createCell(7);
-                cell.setCellValue(contractProductVO.getShipTime());
+                cell.setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(contractProductVO.getShipTime()));
                 cell.setCellStyle(cellStyles[6]);
 
                 cell = row.createCell(8);
